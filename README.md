@@ -106,4 +106,7 @@ Próximas etapas:
 - Validação completa de pagamentos
 - Testes de integração
 - Deploy em produção
+
+```
+
 ```
