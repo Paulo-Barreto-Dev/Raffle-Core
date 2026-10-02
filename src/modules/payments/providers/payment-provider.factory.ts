@@ -1,37 +1,41 @@
-import { env } from '@/config/env'
-import { FakePaymentProvider } from './fake-payment.provider'
-import { PaymentProvider } from './payment-provider.interface'
-import { StripePaymentProvider } from './stripe/stripe-payment.provider'
+import { env } from "@/config/env";
+import { FakePaymentProvider } from "./fake-payment.provider";
+import { PaymentProvider } from "./payment-provider.interface";
+import { StripePaymentProvider } from "./stripe/stripe-payment.provider";
 
-let fakeProviderInstance: FakePaymentProvider | null = null
-let stripeProviderInstance: StripePaymentProvider | null = null
+let fakeProviderInstance: FakePaymentProvider | null = null;
+let stripeProviderInstance: StripePaymentProvider | null = null;
 
 export function getPaymentProvider(): PaymentProvider {
   switch (env.PAYMENT_PROVIDER) {
-    case 'fake':
+    case "fake":
       if (!fakeProviderInstance) {
-        fakeProviderInstance = new FakePaymentProvider()
+        fakeProviderInstance = new FakePaymentProvider();
       }
-      return fakeProviderInstance
-    case 'stripe':
+      return fakeProviderInstance;
+    case "stripe":
       if (!stripeProviderInstance) {
-        stripeProviderInstance = new StripePaymentProvider()
+        stripeProviderInstance = new StripePaymentProvider();
       }
-      return stripeProviderInstance
+      return stripeProviderInstance;
     default:
-      throw new Error(`Provider de pagamento desconhecido: ${env.PAYMENT_PROVIDER}`)
+      throw new Error(
+        `Provider de pagamento desconhecido: ${env.PAYMENT_PROVIDER}`,
+      );
   }
 }
 
 export function getFakePaymentProvider(): FakePaymentProvider {
-  const provider = getPaymentProvider()
+  const provider = getPaymentProvider();
   if (!(provider instanceof FakePaymentProvider)) {
-    throw new Error('FakePaymentProvider disponível apenas com PAYMENT_PROVIDER=fake')
+    throw new Error(
+      "FakePaymentProvider disponível apenas com PAYMENT_PROVIDER=fake",
+    );
   }
-  return provider
+  return provider;
 }
 
 export function resetPaymentProviderForTests(): void {
-  fakeProviderInstance = null
-  stripeProviderInstance = null
+  fakeProviderInstance = null;
+  stripeProviderInstance = null;
 }
