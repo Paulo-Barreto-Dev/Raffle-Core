@@ -13,6 +13,7 @@ services:
       NODE_ENV: development
       PORT: 3000
       DATABASE_URL: postgresql://${POSTGRES_USER:-rifas}:${POSTGRES_PASSWORD:-rifas}@postgres:5432/${POSTGRES_DB:-rifas}?schema=public
+      DIRECT_URL: postgresql://${POSTGRES_USER:-rifas}:${POSTGRES_PASSWORD:-rifas}@postgres:5432/${POSTGRES_DB:-rifas}?schema=public
       REDIS_URL: redis://redis:6379
       JWT_SECRET: ${JWT_SECRET:-change-me-in-local-development-32chars}
       JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
@@ -27,6 +28,7 @@ services:
       LOTERIA_API_URL: ${LOTERIA_API_URL:-https://servicebus2.caixa.gov.br/portaldeloterias/api}
     volumes:
       - .:/app
+      - ./.env.docker:/app/.env:ro
       - api_node_modules:/app/node_modules
     depends_on:
       postgres:
